@@ -1,26 +1,26 @@
 import Link from "next/link";
 import { TypewriterText } from "@/components/landing/TypewriterText";
-import { Particles } from "@/components/landing/Particles";
+import { CursorGlow } from "@/components/landing/CursorGlow";
 import { EventsTicker } from "@/components/landing/EventsTicker";
 
 export default function LandingPage() {
   return (
-    <main className="bg-[#0F0F0E] min-h-screen">
+    <main className="bg-[#0F0F0E] min-h-screen overflow-hidden">
 
       {/* ── Navigation ─────────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 border-b border-[#1E1E1C]"
-        style={{ background: "rgba(15,15,14,0.88)", backdropFilter: "blur(12px)" }}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-white/10 px-6 py-4 backdrop-blur-xl md:px-8"
+        style={{ background: "rgba(15,15,14,0.72)" }}
       >
         <div className="flex items-center gap-1">
           <span className="text-[#FAFAF7] font-black text-xl tracking-tighter">cyber</span>
           <span className="text-[#C84B31] font-black text-xl tracking-tighter">Space</span>
         </div>
 
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-8">
           {["EVENTS", "INTERNSHIPS", "STORIES"].map((item) => (
             <span
               key={item}
-              className="text-[11px] font-semibold tracking-[0.22em] text-[#6B6B63] hover:text-[#FAFAF7] transition-colors cursor-pointer"
+              className="text-[11px] font-semibold tracking-[0.22em] text-[#8A8A81] hover:text-[#FAFAF7] transition-colors cursor-pointer"
             >
               {item}
             </span>
@@ -30,7 +30,7 @@ export default function LandingPage() {
         <div className="flex items-center gap-5">
           <Link
             href="/login"
-            className="text-[11px] font-semibold tracking-[0.15em] text-[#6B6B63] hover:text-[#FAFAF7] transition-colors uppercase"
+            className="text-[11px] font-semibold tracking-[0.15em] text-[#8A8A81] hover:text-[#FAFAF7] transition-colors uppercase"
           >
             Sign in
           </Link>
@@ -45,127 +45,95 @@ export default function LandingPage() {
 
       {/* ── Hero ────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col overflow-hidden">
+        <CursorGlow />
+        <div className="absolute inset-x-0 top-20 h-56 bg-[radial-gradient(circle_at_center,rgba(200,75,49,0.12),transparent_68%)]" aria-hidden />
 
-        {/* Background: massive "CS" letterforms */}
-        <div
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-end pointer-events-none select-none overflow-hidden"
-        >
-          {/* Outline C */}
-          <span
-            className="font-black leading-none text-transparent select-none"
-            style={{
-              fontSize: "clamp(260px, 42vw, 680px)",
-              WebkitTextStroke: "1.5px rgba(200,75,49,0.18)",
-              color: "transparent",
-              marginRight: "-2vw",
-              letterSpacing: "-0.05em",
-              userSelect: "none",
-            }}
-          >
-            C
-          </span>
-          {/* Filled S */}
-          <span
-            className="font-black leading-none select-none"
-            style={{
-              fontSize: "clamp(260px, 42vw, 680px)",
-              color: "rgba(200,75,49,0.13)",
-              marginRight: "-8vw",
-              letterSpacing: "-0.05em",
-              userSelect: "none",
-            }}
-          >
-            S
-          </span>
-        </div>
+        <div className="relative z-10 flex flex-1 items-center px-6 pb-24 pt-32 md:px-10 lg:px-16 mx-auto w-full max-w-7xl">
+          <div className="grid w-full gap-12 xl:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.7fr)] xl:items-end">
+            <div>
+              <div className="flex items-center gap-3 mb-10">
+                <span className="text-[11px] font-semibold tracking-[0.3em] text-[#8A8A81] uppercase">
+                  KNUST · KUMASI
+                </span>
+                <span className="w-12 h-px bg-[#C84B31]" />
+                <span className="text-[11px] font-semibold tracking-[0.3em] text-[#C84B31] uppercase">
+                  2025
+                </span>
+              </div>
 
-        {/* Confetti particles */}
-        <Particles count={30} />
+              <h1
+                className="max-w-4xl font-black text-[#FAFAF7] leading-[0.92] tracking-tight mb-8"
+                style={{ fontSize: "clamp(42px, 6.5vw, 88px)" }}
+              >
+                <TypewriterText />
+              </h1>
 
-        {/* Content */}
-        <div className="relative z-10 flex flex-col justify-center flex-1 px-8 md:px-16 lg:px-24 pt-32 pb-28 max-w-5xl">
+              <p
+                className="text-[#8A8A81] leading-relaxed mb-10 max-w-md"
+                style={{ fontSize: "clamp(15px, 1.5vw, 18px)" }}
+              >
+                Discover events, build your presence, grow your network. Built for
+                KNUST students who are serious about their trajectory.
+              </p>
 
-          {/* Year marker */}
-          <div className="flex items-center gap-3 mb-10">
-            <span className="text-[11px] font-semibold tracking-[0.3em] text-[#6B6B63] uppercase">
-              KNUST · KUMASI
-            </span>
-            <span className="w-12 h-px bg-[#C84B31]" />
-            <span className="text-[11px] font-semibold tracking-[0.3em] text-[#C84B31] uppercase">
-              2025
-            </span>
-          </div>
+              <div className="flex flex-wrap items-center gap-4 mb-12">
+                <Link
+                  href="/signup"
+                  className="rounded-full bg-[#C84B31] px-8 py-4 text-[13px] font-bold tracking-[0.12em] uppercase text-white transition-all hover:-translate-y-0.5 hover:bg-[#E05D42]"
+                >
+                  Get started
+                </Link>
+                <Link
+                  href="/feed"
+                  className="rounded-full border border-white/12 bg-white/0 px-8 py-4 text-[13px] font-bold tracking-[0.12em] uppercase text-[#B7B7AF] transition-all hover:border-white/30 hover:text-[#FAFAF7]"
+                >
+                  Browse events
+                </Link>
+              </div>
 
-          {/* Headline with typewriter */}
-          <h1
-            className="font-black text-[#FAFAF7] leading-[0.92] tracking-tight mb-8"
-            style={{ fontSize: "clamp(42px, 6.5vw, 88px)" }}
-          >
-            <TypewriterText />
-          </h1>
-
-          {/* Sub */}
-          <p
-            className="text-[#6B6B63] leading-relaxed mb-10 max-w-md"
-            style={{ fontSize: "clamp(15px, 1.5vw, 18px)" }}
-          >
-            Discover events, build your presence, grow your network. Built for
-            KNUST students who are serious about their trajectory.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap items-center gap-4 mb-12">
-            <Link
-              href="/signup"
-              className="bg-[#C84B31] text-white px-8 py-4 text-[13px] font-bold tracking-[0.12em] uppercase hover:bg-[#FAFAF7] hover:text-[#0F0F0E] transition-all"
-            >
-              Get started
-            </Link>
-            <Link
-              href="/feed"
-              className="border border-[#2A2A28] text-[#6B6B63] px-8 py-4 text-[13px] font-bold tracking-[0.12em] uppercase hover:border-[#FAFAF7] hover:text-[#FAFAF7] transition-all"
-            >
-              Browse events
-            </Link>
-          </div>
-
-          {/* Play row */}
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full border border-[#2A2A28] flex items-center justify-center cursor-pointer hover:border-[#C84B31] transition-colors group">
-              <div className="w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-l-[8px] border-l-[#6B6B63] ml-0.5 group-hover:border-l-[#C84B31] transition-colors" />
+              <div className="flex items-center gap-3">
+                <div className="group flex h-8 w-8 items-center justify-center rounded-full border border-white/12 transition-colors hover:border-[#C84B31]">
+                  <div className="ml-0.5 h-0 w-0 border-b-[5px] border-b-transparent border-l-8 border-l-[#8A8A81] border-t-[5px] border-t-transparent transition-colors group-hover:border-l-[#C84B31]" />
+                </div>
+                <span className="text-[13px] font-semibold tracking-wide text-[#8A8A81] transition-colors hover:text-[#FAFAF7] cursor-pointer">
+                  Watch intro
+                </span>
+              </div>
             </div>
-            <span className="text-[13px] font-semibold text-[#6B6B63] tracking-wide hover:text-[#FAFAF7] cursor-pointer transition-colors">
-              Watch intro
+
+            <div className="xl:self-center">
+              <div className="border border-white/10 bg-white/5 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.18)] backdrop-blur-sm">
+                <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8A8A81]">
+                  Designed for focus
+                </p>
+                <div className="space-y-4">
+                  {[
+                    ["Discover", "A calmer event feed with stronger hierarchy."],
+                    ["Prepare", "Context-aware briefs before you arrive."],
+                    ["Post", "LinkedIn posts that sound like students, not templates."],
+                  ].map(([title, description]) => (
+                    <div key={title} className="border-b border-white/8 pb-4 last:border-b-0 last:pb-0">
+                      <p className="text-sm font-semibold text-[#FAFAF7]">{title}</p>
+                      <p className="mt-1 text-sm leading-6 text-[#A5A59C]">{description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-8 left-6 z-10 md:left-10 lg:left-16">
+            <span className="text-[10px] font-semibold tracking-[0.3em] text-[#C84B31] uppercase">
+              KNUST · GHANA
             </span>
           </div>
-        </div>
 
-        {/* Right sidebar: SHARE */}
-        <div className="absolute right-6 top-1/2 -translate-y-1/2 z-10 hidden lg:flex flex-col items-center gap-3">
-          <div className="w-px h-10 bg-[#2A2A28]" />
-          <p
-            className="text-[9px] font-bold tracking-[0.4em] text-[#3A3A38] uppercase"
-            style={{ writingMode: "vertical-rl" }}
-          >
-            SHARE
-          </p>
-          <div className="w-px h-10 bg-[#2A2A28]" />
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-          <div className="w-5 h-8 border border-[#2A2A28] rounded-full flex justify-center pt-1.5">
-            <div className="w-0.5 h-2 bg-[#C84B31] rounded-full animate-bounce" />
+          <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
+            <div className="flex h-8 w-5 justify-center rounded-full border border-white/12 pt-1.5">
+              <div className="h-2 w-0.5 animate-bounce rounded-full bg-[#C84B31]" />
+            </div>
+            <span className="text-[9px] tracking-[0.3em] text-[#3A3A38] uppercase">Scroll</span>
           </div>
-          <span className="text-[9px] tracking-[0.3em] text-[#3A3A38] uppercase">Scroll</span>
-        </div>
-
-        {/* Bottom-left: Langara-style label */}
-        <div className="absolute bottom-8 left-8 z-10">
-          <span className="text-[10px] font-semibold tracking-[0.3em] text-[#C84B31] uppercase">
-            KNUST · GHANA
-          </span>
         </div>
       </section>
 
@@ -256,7 +224,7 @@ export default function LandingPage() {
                       key={e.title}
                       className="event-card flex gap-5 border border-[#E8E8E3] p-4 transition-colors cursor-pointer"
                     >
-                      <div className="text-center min-w-[44px] flex-shrink-0">
+                      <div className="text-center min-w-11 shrink-0">
                         <p className="text-[10px] font-bold text-[#6B6B63] uppercase tracking-wider">
                           {e.month}
                         </p>
@@ -374,7 +342,7 @@ export default function LandingPage() {
           </div>
           <Link
             href="/internships"
-            className="flex-shrink-0 text-[11px] font-bold tracking-[0.2em] uppercase border border-[#0F0F0E] text-[#0F0F0E] px-5 py-3 hover:bg-[#0F0F0E] hover:text-white transition-all mt-1"
+            className="shrink-0 text-[11px] font-bold tracking-[0.2em] uppercase border border-[#0F0F0E] text-[#0F0F0E] px-5 py-3 hover:bg-[#0F0F0E] hover:text-white transition-all mt-1"
           >
             See all →
           </Link>
@@ -408,15 +376,9 @@ export default function LandingPage() {
 
       {/* ── Final CTA ───────────────────────────────────────────── */}
       <section className="relative bg-[#0F0F0E] px-8 md:px-16 lg:px-24 py-28 overflow-hidden">
-        <Particles count={16} />
-        {/* Background CS */}
-        <div aria-hidden className="absolute right-0 bottom-0 pointer-events-none select-none overflow-hidden leading-none">
-          <span
-            className="font-black text-[#C84B31] opacity-[0.06] select-none leading-none"
-            style={{ fontSize: "clamp(180px, 28vw, 480px)" }}
-          >
-            CS
-          </span>
+        <div aria-hidden className="absolute inset-0 pointer-events-none">
+          <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-[#C84B31]/10 blur-3xl" />
+          <div className="absolute -right-16 bottom-0 h-96 w-96 rounded-full bg-white/5 blur-3xl" />
         </div>
         <div className="relative z-10 max-w-3xl">
           <p className="text-[11px] font-bold tracking-[0.3em] text-[#C84B31] uppercase mb-6">
