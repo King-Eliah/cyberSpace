@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { authOptions } from "@/lib/auth";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 
 export default async function AppLayout({
   children,
@@ -45,14 +46,7 @@ export default async function AppLayout({
             >
               {session.user.name?.split(" ")[0] ?? "Profile"}
             </Link>
-            <form action="/api/auth/signout" method="POST">
-              <button
-                type="submit"
-                className="text-xs text-[#6B6B63] hover:text-[#C84B31] transition-colors"
-              >
-                Sign out
-              </button>
-            </form>
+            <SignOutButton />
           </div>
         </div>
       </nav>
