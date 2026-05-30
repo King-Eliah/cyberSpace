@@ -303,26 +303,59 @@ export default function LandingPage() {
             <div className="flex items-center gap-3 mb-5">
               <span className="text-[11px] font-black tracking-[0.3em] text-[#C84B31] uppercase">04</span>
               <span className="w-8 h-px bg-[#C84B31]" />
-              <span className="text-[11px] font-bold tracking-[0.25em] text-[#6B6B63] uppercase">LEARN</span>
+              <span className="text-[11px] font-bold tracking-[0.25em] text-[#6B6B63] uppercase">COMMUNITY</span>
             </div>
             <h2 className="text-4xl font-black text-[#0F0F0E] leading-tight mb-5">
-              Tips from students who&apos;ve been there
+              Tips from different students, not one voice.
             </h2>
             <p className="text-[#6B6B63] text-base leading-relaxed">
-              Best part. What to skip. Who to talk to. Real notes from past attendees — before you walk in the door.
+              Best parts, what to skip, who to meet, and a few replies underneath when someone needs the extra context.
             </p>
           </div>
           <div className="md:order-1 space-y-3">
             {[
-              { type: "BEST PART", color: "border-[#4CAF50] text-[#4CAF50]", tip: "The hands-on ML workshop after the keynote. Instructor flew in from Google Accra specifically for this." },
-              { type: "BRING THIS", color: "border-[#2196F3] text-[#2196F3]", tip: "Your phone and LinkedIn QR ready. People will connect on the spot. Don't fumble with business cards." },
-              { type: "TALK TO", color: "border-[#C84B31] text-[#C84B31]", tip: "The MEST alumni — they're always there and will give you brutally honest feedback on your ideas." },
+              {
+                name: "Ama Serwaa",
+                college: "COE · Year 3",
+                type: "BEST PART",
+                color: "border-[#4CAF50] text-[#4CAF50]",
+                tip: "The hands-on ML workshop after the keynote was the real value. Less hype, more building.",
+                reply: "Reply: If you go, sit near the front. The Q&A after lunch got the best contacts.",
+              },
+              {
+                name: "Yaw Mensah",
+                college: "KSB · Year 4",
+                type: "BRING THIS",
+                color: "border-[#2196F3] text-[#2196F3]",
+                tip: "Keep your phone ready and your LinkedIn QR open. Conversations moved fast at the booths.",
+                reply: "Reply: A short intro with your college and what you build works better than business cards.",
+              },
+              {
+                name: "Nana Ama",
+                college: "COS · Year 2",
+                type: "TALK TO",
+                color: "border-[#C84B31] text-[#C84B31]",
+                tip: "The MEST alumni were the most honest people in the room. They will tell you if your idea is weak.",
+                reply: "Reply: Ask what they would build first if they were starting over. That question opens things up.",
+              },
             ].map((t) => (
-              <div key={t.type} className="border border-[#E8E8E3] bg-white p-5">
-                <span className={`text-[10px] font-black uppercase tracking-[0.2em] border px-2 py-0.5 ${t.color}`}>
-                  {t.type}
-                </span>
-                <p className="text-sm text-[#0F0F0E] leading-relaxed mt-3">{t.tip}</p>
+              <div key={t.name} className="border border-[#E8E8E3] bg-white p-5">
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div>
+                    <p className="text-sm font-semibold text-[#0F0F0E]">{t.name}</p>
+                    <p className="text-xs text-[#6B6B63] mt-0.5">{t.college}</p>
+                  </div>
+                  <span className={`text-[10px] font-black uppercase tracking-[0.2em] border px-2 py-0.5 ${t.color}`}>
+                    {t.type}
+                  </span>
+                </div>
+                <p className="text-sm text-[#0F0F0E] leading-relaxed">{t.tip}</p>
+                <div className="mt-4 border-l-2 border-[#E8E8E3] pl-4">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6B63] mb-1">
+                    Reply
+                  </p>
+                  <p className="text-sm text-[#6B6B63] leading-relaxed">{t.reply}</p>
+                </div>
               </div>
             ))}
           </div>

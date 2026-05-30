@@ -41,6 +41,7 @@ export const commentSchema = z.object({
     .string()
     .min(3, "Comment must be at least 3 characters")
     .max(1000, "Comment must be under 1000 characters"),
+  parentCommentId: z.string().min(1).optional(),
   tipType: z
     .enum(["BEST_PART", "SKIP_THIS", "BRING_THIS", "TALK_TO", "GENERAL"])
     .optional(),

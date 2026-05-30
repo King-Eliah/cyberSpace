@@ -28,6 +28,10 @@ const TIP_COLORS: Record<TipType, string> = {
 
 type TabValue = "ALL" | TipType;
 
+type ThreadComment = Comment & {
+  replies?: ThreadComment[];
+};
+
 export function CommentSection({
   eventId,
   comments: initialComments,
@@ -37,14 +41,85 @@ export function CommentSection({
   const [activeTab, setActiveTab] = useState<TabValue>("ALL");
   const [content, setContent] = useState("");
   const [tipType, setTipType] = useState<TipType>("GENERAL");
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [replyContent, setReplyContent] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [replySubmitting, setReplySubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [replyError, setReplyError] = useState("");
   const router = useRouter();
+
+  const { roots, threads } = (() => {
+    const threadMap = new Map<string, ThreadComment>();
+
+    comments.forEach((comment) => {
+      threadMap.set(comment.id, { ...comment, replies: [] });
+    });
+
+    const rootComments: ThreadComment[] = [];
+
+    comments.forEach((comment) => {
+      const node = threadMap.get(comment.id);
+      if (!node) return;
+
+      if (comment.parentCommentId) {
+        const parent = threadMap.get(comment.parentCommentId);
+        if (parent) {
+          parent.replies = [...(parent.replies ?? []), node];
+        } else {
+          rootComments.push(node);
+        }
+      } else {
+        rootComments.push(node);
+      }
+    });
+
+    const sortedRoots = rootComments.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    const sortReplies = (items: ThreadComment[]): ThreadComment[] =>
+      items
+        .map((item) => ({
+          ...item,
+          replies: sortReplies(item.replies ?? []),
+        }))
+        .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+
+    return {
+      roots: sortedRoots,
+      threads: sortReplies(sortedRoots),
+    };
+  })();
 
   const filtered =
     activeTab === "ALL"
-      ? comments
-      : comments.filter((c) => c.tipType === activeTab);
+      ? threads
+      : threads.filter((c) => c.tipType === activeTab);
+
+  async function submitComment(payload: {
+    content: string;
+    tipType: TipType;
+    parentCommentId?: string | null;
+  }) {
+    const res = await fetch("/api/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        eventId,
+        content: payload.content.trim(),
+        tipType: payload.tipType,
+        parentCommentId: payload.parentCommentId ?? null,
+      }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || "Failed to post");
+    }
+
+    return res.json() as Promise<Comment>;
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -59,19 +134,7 @@ export function CommentSection({
     setError("");
 
     try {
-      const res = await fetch("/api/comments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ eventId, content: content.trim(), tipType }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        setError(data.error || "Failed to post");
-        return;
-      }
-
-      const newComment = await res.json();
+      const newComment = await submitComment({ content, tipType });
       setComments((prev) => [newComment, ...prev]);
       setContent("");
     } catch {
@@ -81,14 +144,160 @@ export function CommentSection({
     }
   }
 
+  async function handleReply(parentCommentId: string) {
+    if (!replyContent.trim() || replySubmitting) return;
+
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+
+    setReplySubmitting(true);
+    setReplyError("");
+
+    try {
+      const newComment = await submitComment({
+        content: replyContent,
+        tipType: "GENERAL",
+        parentCommentId,
+      });
+      setComments((prev) => [newComment, ...prev]);
+      setReplyContent("");
+      setReplyingTo(null);
+    } catch {
+      setReplyError("Something went wrong");
+    } finally {
+      setReplySubmitting(false);
+    }
+  }
+
+  function renderThread(comment: ThreadComment, depth = 0) {
+    const isReply = depth > 0;
+
+    return (
+      <div key={comment.id} className={`${depth > 0 ? "ml-6 pl-4 border-l border-[#E8E8E3]" : ""}`}>
+        <div className={`border border-[#E8E8E3] bg-white ${isReply ? "p-4" : "p-5"}`}>
+          <div className="flex items-start justify-between gap-4 mb-3">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#E8E8E3] flex items-center justify-center text-sm font-semibold text-[#6B6B63] shrink-0">
+                {comment.user?.name?.charAt(0).toUpperCase() ?? "?"}
+              </div>
+              <div>
+                <p className="text-sm font-semibold leading-none">
+                  {comment.user?.name ?? "Anonymous"}
+                </p>
+                <p className="text-xs text-[#6B6B63] mt-0.5">
+                  {comment.user?.college}
+                </p>
+              </div>
+            </div>
+            {comment.tipType && comment.tipType !== "GENERAL" && (
+              <span
+                className={`text-xs font-semibold border px-2 py-0.5 uppercase tracking-wide ${
+                  TIP_COLORS[comment.tipType]
+                }`}
+              >
+                {TIP_TYPES.find((t) => t.value === comment.tipType)?.label}
+              </span>
+            )}
+          </div>
+          <p className="text-sm text-[#0F0F0E] leading-relaxed">{comment.content}</p>
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-[#6B6B63]">
+            <span>
+              {new Date(comment.createdAt).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                if (!isAuthenticated) {
+                  router.push("/login");
+                  return;
+                }
+                setReplyingTo(comment.id);
+                setReplyError("");
+                setReplyContent("");
+              }}
+              className="font-semibold text-[#C84B31] hover:underline"
+            >
+              Reply
+            </button>
+          </div>
+        </div>
+
+        {replyingTo === comment.id && (
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              void handleReply(comment.id);
+            }}
+            className="ml-6 mt-3 border border-[#E8E8E3] bg-[#FAFAF7] p-4"
+          >
+            <textarea
+              value={replyContent}
+              onChange={(event) => setReplyContent(event.target.value)}
+              placeholder={`Reply to ${comment.user?.name ?? "this tip"}`}
+              rows={2}
+              maxLength={1000}
+              className="w-full resize-none border border-[#E8E8E3] bg-white p-3 text-sm focus:border-[#0F0F0E] focus:outline-none"
+            />
+            {replyError && <p className="mt-2 text-sm text-[#C84B31]">{replyError}</p>}
+            <div className="mt-3 flex items-center justify-between gap-3">
+              <span className="text-xs text-[#6B6B63]">{replyContent.length}/1000</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setReplyingTo(null);
+                    setReplyContent("");
+                    setReplyError("");
+                  }}
+                  className="text-xs font-semibold text-[#6B6B63] hover:text-[#0F0F0E]"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={replySubmitting || !replyContent.trim()}
+                  className="bg-[#0F0F0E] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#C84B31] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {replySubmitting ? "Replying..." : "Post reply"}
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
+
+        {comment.replies && comment.replies.length > 0 && (
+          <div className="mt-3 space-y-3">
+            {comment.replies.map((reply) => renderThread(reply, depth + 1))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h2 className="text-xl font-bold mb-6">
-        Community tips{" "}
-        <span className="text-[#6B6B63] font-normal text-base">
-          ({comments.length})
-        </span>
-      </h2>
+      <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-[#0F0F0E]">
+            Community tips{" "}
+            <span className="text-[#6B6B63] font-normal text-base">
+              ({comments.length})
+            </span>
+          </h2>
+          <p className="mt-1 text-sm text-[#6B6B63]">
+            Short notes, different voices, and replies if you want the extra context.
+          </p>
+        </div>
+        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6B6B63]">
+          {roots.length} threads
+        </div>
+      </div>
 
       {/* Tabs */}
       <div className="flex gap-1 mb-6 border-b border-[#E8E8E3] overflow-x-auto">
@@ -112,7 +321,7 @@ export function CommentSection({
       </div>
 
       {/* Post a tip */}
-      <form onSubmit={handleSubmit} className="mb-8 border border-[#E8E8E3] p-5 bg-white">
+      <form onSubmit={handleSubmit} className="mb-8 border border-[#E8E8E3] bg-white p-5">
         <div className="flex gap-2 mb-3 flex-wrap">
           {TIP_TYPES.map((t) => (
             <button
@@ -159,44 +368,7 @@ export function CommentSection({
             No tips yet. Be the first.
           </p>
         ) : (
-          filtered.map((comment) => (
-            <div key={comment.id} className="border border-[#E8E8E3] p-5 bg-white">
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-[#E8E8E3] flex items-center justify-center text-sm font-semibold text-[#6B6B63] flex-shrink-0">
-                    {comment.user?.name?.charAt(0).toUpperCase() ?? "?"}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold leading-none">
-                      {comment.user?.name ?? "Anonymous"}
-                    </p>
-                    <p className="text-xs text-[#6B6B63] mt-0.5">
-                      {comment.user?.college}
-                    </p>
-                  </div>
-                </div>
-                {comment.tipType && comment.tipType !== "GENERAL" && (
-                  <span
-                    className={`text-xs font-semibold border px-2 py-0.5 uppercase tracking-wide ${
-                      TIP_COLORS[comment.tipType]
-                    }`}
-                  >
-                    {TIP_TYPES.find((t) => t.value === comment.tipType)?.label}
-                  </span>
-                )}
-              </div>
-              <p className="text-sm text-[#0F0F0E] leading-relaxed">
-                {comment.content}
-              </p>
-              <p className="text-xs text-[#6B6B63] mt-3">
-                {new Date(comment.createdAt).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                })}
-              </p>
-            </div>
-          ))
+          filtered.map((comment) => renderThread(comment))
         )}
       </div>
     </div>
