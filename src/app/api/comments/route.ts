@@ -21,10 +21,25 @@ export async function POST(request: Request) {
   }
 
   const { eventId, content, tipType } = parsed.data;
+  const parentCommentId = parsed.data.parentCommentId ?? null;
 
   const event = await prisma.event.findUnique({ where: { id: eventId } });
   if (!event) {
     return NextResponse.json({ error: "Event not found" }, { status: 404 });
+  }
+
+  if (parentCommentId) {
+    const parentComment = await prisma.comment.findFirst({
+      where: {
+        id: parentCommentId,
+        eventId,
+        isHidden: false,
+      },
+    });
+
+    if (!parentComment) {
+      return NextResponse.json({ error: "Reply target not found" }, { status: 404 });
+    }
   }
 
   const comment = await prisma.comment.create({
@@ -33,6 +48,7 @@ export async function POST(request: Request) {
       eventId,
       content,
       tipType: tipType ?? null,
+      parentCommentId,
     },
     include: {
       user: {

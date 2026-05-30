@@ -93,6 +93,7 @@ export interface Comment {
   id: string;
   userId: string;
   eventId: string;
+  parentCommentId?: string | null;
   content: string;
   tipType?: TipType | null;
   isFlagged: boolean;

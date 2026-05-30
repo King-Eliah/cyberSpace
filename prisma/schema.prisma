@@ -64,16 +64,19 @@ model Rsvp {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  userId    String
-  eventId   String
-  content   String   @db.Text
-  tipType   TipType?
-  isFlagged Boolean  @default(false)
-  isHidden  Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
+  id              String    @id @default(cuid())
+  userId          String
+  eventId         String
+  parentCommentId  String?
+  content         String    @db.Text
+  tipType         TipType?
+  isFlagged       Boolean   @default(false)
+  isHidden        Boolean   @default(false)
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event           Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  parentComment   Comment?  @relation("CommentReplies", fields: [parentCommentId], references: [id], onDelete: Cascade)
+  replies         Comment[] @relation("CommentReplies")
+  createdAt       DateTime  @default(now())
 }
 
 model Internship {
