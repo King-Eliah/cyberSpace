@@ -1,0 +1,177 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  username     String        @unique
+  password     String
+  avatarUrl    String?
+  college      College
+  program      String?
+  yearOfStudy  Int?
+  interests    String[]
+  bio          String?
+  linkedinUrl  String?
+  rsvps        Rsvp[]
+  comments     Comment[]
+  applications Application[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Event {
+  id                  String        @id @default(cuid())
+  title               String
+  description         String        @db.Text
+  startsAt            DateTime
+  endsAt              DateTime?
+  location            String?
+  isOnline            Boolean       @default(false)
+  category            EventCategory
+  tags                String[]
+  targetColleges      College[]
+  organizer           String
+  coverImageUrl       String?
+  requiresApplication Boolean       @default(false)
+  applicationUrl      String?
+  applicationDeadline DateTime?
+  status              EventStatus   @default(APPROVED)
+  source              String        @default("manual")
+  sourceUrl           String?
+  rsvps               Rsvp[]
+  comments            Comment[]
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+model Rsvp {
+  id        String     @id @default(cuid())
+  userId    String
+  eventId   String
+  status    RsvpStatus
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event     Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+
+  @@unique([userId, eventId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  userId    String
+  eventId   String
+  content   String   @db.Text
+  tipType   TipType?
+  isFlagged Boolean  @default(false)
+  isHidden  Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Internship {
+  id                  String        @id @default(cuid())
+  title               String
+  company             String
+  description         String        @db.Text
+  location            String?
+  isRemote            Boolean       @default(false)
+  isPaid              Boolean       @default(true)
+  stipendRange        String?
+  applicationUrl      String
+  applicationDeadline DateTime?
+  tags                String[]
+  experienceLevel     String        @default("Entry-level")
+  source              String        @default("manual")
+  status              String        @default("active")
+  applications        Application[]
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+model Application {
+  id           String            @id @default(cuid())
+  userId       String
+  internshipId String
+  status       ApplicationStatus @default(SAVED)
+  notes        String?           @db.Text
+  appliedAt    DateTime?
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  internship   Internship        @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@unique([userId, internshipId])
+}
+
+model AiGeneration {
+  id           String   @id @default(cuid())
+  userId       String
+  type         String
+  eventId      String?
+  internshipId String?
+  input        Json
+  output       Json
+  tokensUsed   Int
+  createdAt    DateTime @default(now())
+}
+
+enum College {
+  COE
+  COS
+  KSB
+  COHS
+  COA
+  COAS
+  IDL
+  OTHER
+}
+
+enum EventCategory {
+  HACKATHON
+  TALK
+  WORKSHOP
+  CAREER_FAIR
+  NETWORKING
+  CONFERENCE
+  COMPETITION
+  SOCIAL
+  OTHER
+}
+
+enum EventStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ARCHIVED
+}
+
+enum RsvpStatus {
+  INTERESTED
+  GOING
+  ATTENDED
+  MISSED
+}
+
+enum TipType {
+  BEST_PART
+  SKIP_THIS
+  BRING_THIS
+  TALK_TO
+  GENERAL
+}
+
+enum ApplicationStatus {
+  SAVED
+  APPLIED
+  INTERVIEWING
+  OFFER
+  REJECTED
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "title": "Software Engineering Intern",
+    "company": "Hubtel",
+    "description": "Hubtel is Ghana's leading commerce and payments platform. As a software engineering intern, you'll work on real features used by millions of Ghanaians — mobile money integration, merchant APIs, and consumer apps. Stack: .NET, React, PostgreSQL. 3-month program, possibility of extension. Based in Accra with hybrid flexibility.",
+    "location": "Accra, Ghana",
+    "isRemote": false,
+    "isPaid": true,
+    "stipendRange": "GHS 1,500–2,500/month",
+    "applicationUrl": "https://hubtel.com/careers",
+    "applicationDeadline": "2026-07-11T13:02:53.431Z",
+    "tags": [
+      "React",
+      ".NET",
+      "PostgreSQL",
+      "fintech",
+      "payments"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "Product Design Intern",
+    "company": "Paystack",
+    "description": "Paystack (acquired by Stripe) processes payments for businesses across Africa. You'll work alongside senior product designers on the merchant dashboard, onboarding flows, and mobile checkout experiences. Expected to run your own user research sessions. Proficiency in Figma required. Remote-first, with occasional Lagos team visits.",
+    "location": "Remote (Africa-based)",
+    "isRemote": true,
+    "isPaid": true,
+    "stipendRange": "$400–600 USD/month",
+    "applicationUrl": "https://paystack.com/careers",
+    "applicationDeadline": "2026-07-04T13:02:53.431Z",
+    "tags": [
+      "Figma",
+      "UX research",
+      "product design",
+      "fintech",
+      "Stripe"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "Data Analyst Intern",
+    "company": "MTN Ghana",
+    "description": "MTN Ghana's analytics team is looking for a data-driven intern to help analyse subscriber behaviour, network performance, and MoMo transaction trends. You'll use SQL, Python, and Power BI. The internship runs for 4 months and is based in Accra. Strong candidates are considered for the MTN graduate programme.",
+    "location": "Accra, Ghana",
+    "isRemote": false,
+    "isPaid": true,
+    "stipendRange": "GHS 1,800–2,200/month",
+    "applicationUrl": "https://mtn.com.gh/careers",
+    "applicationDeadline": "2026-06-27T13:02:53.431Z",
+    "tags": [
+      "SQL",
+      "Python",
+      "Power BI",
+      "data analysis",
+      "telecom"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "Frontend Engineering Intern",
+    "company": "Zeepay",
+    "description": "Zeepay is a fintech connecting mobile money wallets across Africa and diaspora corridors. You'll build features on their web platform using React and TypeScript. The team is small, so interns own real features from start to finish. Great for students who want to go deep fast. Hybrid — Accra office + remote.",
+    "location": "Accra, Ghana (Hybrid)",
+    "isRemote": true,
+    "isPaid": true,
+    "stipendRange": "GHS 1,200–1,800/month",
+    "applicationUrl": "https://zeepay.com/careers",
+    "applicationDeadline": "2026-07-04T13:02:53.431Z",
+    "tags": [
+      "React",
+      "TypeScript",
+      "fintech",
+      "mobile money",
+      "frontend"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "Software Development Intern",
+    "company": "Turaco",
+    "description": "Turaco provides affordable insurance to low-income workers in Ghana, Uganda, and Kenya via mobile money. Small but fast-growing team. You'll work across their platform — claims processing, partner APIs, and internal dashboards. Stack: Python (Django), React. Remote-friendly with a Accra office for those nearby.",
+    "location": "Remote / Accra, Ghana",
+    "isRemote": true,
+    "isPaid": true,
+    "stipendRange": "$350–500 USD/month",
+    "applicationUrl": "https://turaco.co/careers",
+    "applicationDeadline": "2026-07-18T13:02:53.431Z",
+    "tags": [
+      "Python",
+      "Django",
+      "React",
+      "insurtech",
+      "Africa"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "Business Analyst Intern",
+    "company": "Deloitte Ghana",
+    "description": "Deloitte Ghana's consulting team works with financial institutions, government agencies, and large corporates. As a business analyst intern, you'll support client engagements — data gathering, process mapping, report writing, and presentation preparation. KSB and Business-adjacent students preferred. Based in Accra, formal attire required.",
+    "location": "Accra, Ghana",
+    "isRemote": false,
+    "isPaid": true,
+    "stipendRange": "GHS 2,000–3,000/month",
+    "applicationUrl": "https://www2.deloitte.com/gh/en/careers.html",
+    "applicationDeadline": "2026-06-20T13:02:53.431Z",
+    "tags": [
+      "consulting",
+      "business analysis",
+      "Excel",
+      "PowerPoint",
+      "finance"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "Machine Learning Engineering Intern",
+    "company": "InstaDeep",
+    "description": "InstaDeep (acquired by BioNTech) is a leading AI company with roots in Africa. This remote internship is part of their Africa talent programme. You'll contribute to real ML research and production projects in reinforcement learning, protein design, or logistics optimisation. Strong Python and PyTorch skills required. Fully remote.",
+    "location": "Remote (Africa)",
+    "isRemote": true,
+    "isPaid": true,
+    "stipendRange": "$500–800 USD/month",
+    "applicationUrl": "https://www.instadeep.com/careers/",
+    "applicationDeadline": "2026-07-25T13:02:53.431Z",
+    "tags": [
+      "ML",
+      "Python",
+      "PyTorch",
+      "AI research",
+      "reinforcement learning"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "Network Engineering Intern",
+    "company": "Vodafone Ghana",
+    "description": "Vodafone Ghana is one of the country's largest telecom operators. This internship sits within the network engineering team — you'll rotate across radio access, core network, and IP teams. Ideal for COE Telecom/Electrical students. Based in Accra. Vodafone offers a structured grad programme for top interns.",
+    "location": "Accra, Ghana",
+    "isRemote": false,
+    "isPaid": true,
+    "stipendRange": "GHS 1,500–2,000/month",
+    "applicationUrl": "https://vodafone.com.gh/careers",
+    "applicationDeadline": "2026-06-27T13:02:53.431Z",
+    "tags": [
+      "networking",
+      "telecom",
+      "radio",
+      "IP",
+      "infrastructure"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "UX Research Intern",
+    "company": "Flutterwave",
+    "description": "Flutterwave powers payments for Africa-facing businesses globally. This remote UX research internship involves conducting user interviews, synthesising research findings, and contributing to product decisions for merchant tools and consumer apps. You'll work directly with senior researchers. Must be comfortable running remote user interviews.",
+    "location": "Remote",
+    "isRemote": true,
+    "isPaid": true,
+    "stipendRange": "$400–600 USD/month",
+    "applicationUrl": "https://flutterwave.com/us/careers",
+    "applicationDeadline": "2026-07-11T13:02:53.431Z",
+    "tags": [
+      "UX research",
+      "user interviews",
+      "product",
+      "fintech",
+      "remote"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  },
+  {
+    "title": "Civil/Structural Engineering Intern",
+    "company": "Mott MacDonald Ghana",
+    "description": "Mott MacDonald is a global engineering consultancy with a strong Ghana presence. This structural engineering internship supports infrastructure projects across Ghana — bridges, buildings, and urban development. COA and COE students preferred. Hybrid working model with site visits required.",
+    "location": "Accra, Ghana (Hybrid)",
+    "isRemote": false,
+    "isPaid": true,
+    "stipendRange": "GHS 1,800–2,500/month",
+    "applicationUrl": "https://www.mottmac.com/careers",
+    "applicationDeadline": "2026-07-04T13:02:53.431Z",
+    "tags": [
+      "civil engineering",
+      "structural",
+      "infrastructure",
+      "AutoCAD",
+      "construction"
+    ],
+    "experienceLevel": "Entry-level",
+    "source": "curated"
+  }
+]

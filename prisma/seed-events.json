@@ -1,0 +1,313 @@
+[
+  {
+    "title": "GDG Kumasi DevFest 2025",
+    "description": "DevFest is Google Developer Groups' annual flagship event — a day of talks, workshops, and networking covering Android, Web, AI/ML, and Cloud. KNUST students get priority registration. Expect speakers from Google, local startups, and senior engineers across Ghana. This is the biggest tech event in Kumasi. Dress smart, bring your laptop, and come ready to connect.",
+    "startsAt": "2026-06-20T13:02:53.431Z",
+    "endsAt": "2026-06-20T13:02:53.431Z",
+    "location": "Great Hall, KNUST, Kumasi",
+    "isOnline": false,
+    "category": "CONFERENCE",
+    "tags": [
+      "Google",
+      "Android",
+      "AI",
+      "Web",
+      "free",
+      "certificate"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS",
+      "OTHER"
+    ],
+    "organizer": "GDG Kumasi",
+    "requiresApplication": false,
+    "applicationUrl": "https://gdg.community.dev/gdg-kumasi/",
+    "source": "curated",
+    "sourceUrl": "https://gdg.community.dev/gdg-kumasi/"
+  },
+  {
+    "title": "IEEE KNUST Student Branch — Tech Talk: AI in Healthcare",
+    "description": "Monthly IEEE tech talk series. This edition: how machine learning is being deployed in Ghanaian hospitals, diagnostics startups, and telemedicine. Speaker from Helios Health and a PhD researcher from KNUST College of Health Sciences. Open to all students, no IEEE membership required. Free snacks provided.",
+    "startsAt": "2026-06-06T13:02:53.431Z",
+    "endsAt": "2026-06-06T13:02:53.431Z",
+    "location": "Electrical Engineering LT1, KNUST",
+    "isOnline": false,
+    "category": "TALK",
+    "tags": [
+      "AI",
+      "healthcare",
+      "IEEE",
+      "free",
+      "ML"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS",
+      "COHS"
+    ],
+    "organizer": "IEEE KNUST Student Branch",
+    "requiresApplication": false,
+    "source": "curated"
+  },
+  {
+    "title": "AIESEC KNUST — Global Volunteer Info Session",
+    "description": "Thinking about a global experience? AIESEC offers 6-week international volunteering programs in 120+ countries. This info session covers how to apply, what projects are available (education, environment, tech), and how past KNUST students found it. Also covers how to fund the program. All colleges welcome.",
+    "startsAt": "2026-06-13T13:02:53.431Z",
+    "location": "KSB Lecture Theatre B, KNUST",
+    "isOnline": false,
+    "category": "NETWORKING",
+    "tags": [
+      "AIESEC",
+      "international",
+      "volunteer",
+      "career",
+      "free"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS",
+      "KSB",
+      "COA",
+      "COAS"
+    ],
+    "organizer": "AIESEC KNUST",
+    "requiresApplication": false,
+    "source": "curated"
+  },
+  {
+    "title": "KNUST SRC Career & Internship Fair 2025",
+    "description": "The biggest on-campus recruitment event of the year. 40+ companies including Vodafone Ghana, MTN, Hubtel, Ecobank, Deloitte Ghana, PwC, and several growing startups will be recruiting for internships and graduate roles. Bring printed CVs (minimum 10 copies). Dress formally. The fair runs 9am–4pm — come early for the least crowded halls.",
+    "startsAt": "2026-06-27T13:02:53.431Z",
+    "endsAt": "2026-06-27T13:02:53.431Z",
+    "location": "Recreation Centre, KNUST, Kumasi",
+    "isOnline": false,
+    "category": "CAREER_FAIR",
+    "tags": [
+      "career",
+      "internship",
+      "recruitment",
+      "corporate",
+      "CV",
+      "Vodafone",
+      "MTN",
+      "Hubtel"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS",
+      "KSB",
+      "COHS",
+      "COA",
+      "COAS"
+    ],
+    "organizer": "KNUST SRC",
+    "requiresApplication": false,
+    "source": "curated"
+  },
+  {
+    "title": "MEST Africa Entrepreneurship Workshop — Kumasi Edition",
+    "description": "MEST (Meltwater Entrepreneurial School of Technology) runs quarterly workshops for aspiring tech entrepreneurs in Ghana. This Kumasi edition covers: validating a startup idea in 48 hours, pitching to investors, and navigating the Ghana tech ecosystem. 30 spots available. Application required — essay question: describe a problem you'd solve with technology.",
+    "startsAt": "2026-07-04T13:02:53.431Z",
+    "location": "KNUST School of Business, Room 204",
+    "isOnline": false,
+    "category": "WORKSHOP",
+    "tags": [
+      "startup",
+      "entrepreneurship",
+      "MEST",
+      "pitch",
+      "application required"
+    ],
+    "targetColleges": [
+      "KSB",
+      "COE",
+      "COS"
+    ],
+    "organizer": "MEST Africa",
+    "requiresApplication": true,
+    "applicationUrl": "https://meltwater.org/mest",
+    "applicationDeadline": "2026-06-20T13:02:53.431Z",
+    "source": "curated",
+    "sourceUrl": "https://meltwater.org/mest"
+  },
+  {
+    "title": "HackKNUST 2025 — 36hr Hackathon",
+    "description": "KNUST's flagship student-run hackathon. Theme: 'Technology for Local Communities'. Build anything that solves a real problem in Kumasi or Ghana broadly. Teams of 2-4. Prizes: GHS 5,000 first place, GHS 2,500 second, GHS 1,000 third. Mentors from local startups available throughout. Meals and accommodation provided for the 36 hours. Register as a team or solo (we'll help you find teammates).",
+    "startsAt": "2026-07-11T13:02:53.431Z",
+    "endsAt": "2026-07-11T13:02:53.431Z",
+    "location": "Computer Science Building, KNUST",
+    "isOnline": false,
+    "category": "HACKATHON",
+    "tags": [
+      "hackathon",
+      "prizes",
+      "GHS5000",
+      "teams",
+      "overnight",
+      "mentors"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS",
+      "KSB"
+    ],
+    "organizer": "KNUST Computing Students Association",
+    "requiresApplication": true,
+    "applicationUrl": "https://hackknust.com",
+    "applicationDeadline": "2026-06-27T13:02:53.431Z",
+    "source": "curated",
+    "sourceUrl": "https://hackknust.com"
+  },
+  {
+    "title": "Ashesi x KNUST Joint Networking Night",
+    "description": "First-ever joint networking event between Ashesi University and KNUST students. Informal mixer — no presentations, no panels. Just 80 ambitious students from two of Ghana's best universities in one room. GDG, AIESEC, Enactus, and entrepreneurship club members from both schools. Hosted at KNUST. Come to make real connections, not to collect business cards.",
+    "startsAt": "2026-06-13T13:02:53.431Z",
+    "location": "University Hotel Foyer, KNUST",
+    "isOnline": false,
+    "category": "NETWORKING",
+    "tags": [
+      "networking",
+      "Ashesi",
+      "connections",
+      "informal",
+      "evening"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS",
+      "KSB",
+      "COA"
+    ],
+    "organizer": "KNUST Entrepreneurship Club",
+    "requiresApplication": false,
+    "source": "curated"
+  },
+  {
+    "title": "Google Cloud Study Jam — Machine Learning Track",
+    "description": "Free 4-week hands-on program run by GDG Kumasi. You'll complete Google Cloud ML labs, earn badges, and get a Google Cloud credit. No prior ML experience needed. Past participants have used this to land cloud engineering internships. Limited to 50 students — first come, first served. Bring your laptop every session.",
+    "startsAt": "2026-06-06T13:02:53.431Z",
+    "location": "Department of Computer Science, KNUST",
+    "isOnline": false,
+    "category": "WORKSHOP",
+    "tags": [
+      "Google Cloud",
+      "ML",
+      "free",
+      "certificate",
+      "GCP",
+      "hands-on"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS"
+    ],
+    "organizer": "GDG Kumasi",
+    "requiresApplication": false,
+    "applicationUrl": "https://gdg.community.dev/gdg-kumasi/",
+    "source": "curated"
+  },
+  {
+    "title": "Vodafone Ghana Innovation Lab — Campus Tour & Talk",
+    "description": "Vodafone Ghana's Innovation Lab is opening its doors to KNUST students. Get a tour of the lab, hear from engineers and product managers about what they're building, and learn about their graduate and internship programmes. Q&A session at the end. Transport provided from KNUST main gate. RSVP required — 40 spots only.",
+    "startsAt": "2026-06-20T13:02:53.431Z",
+    "location": "Vodafone Innovation Lab, Accra (transport from KNUST)",
+    "isOnline": false,
+    "category": "NETWORKING",
+    "tags": [
+      "Vodafone",
+      "industry visit",
+      "telecom",
+      "internship",
+      "transport provided"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS",
+      "KSB"
+    ],
+    "organizer": "Vodafone Ghana",
+    "requiresApplication": true,
+    "applicationUrl": "https://vodafone.com.gh/careers",
+    "applicationDeadline": "2026-06-13T13:02:53.431Z",
+    "source": "curated"
+  },
+  {
+    "title": "Fintech Frontiers: Building for Mobile Money in Ghana",
+    "description": "A talk + panel hosted by Hubtel and Zeepay exploring how to build financial products for Ghana's mobile money ecosystem. Speakers include senior engineers from Hubtel, the CEO of Zeepay, and a product manager from MTN MoMo. Perfect if you're interested in fintech, payments, or want to understand Ghana's digital finance infrastructure. Open to all.",
+    "startsAt": "2026-06-13T13:02:53.431Z",
+    "location": "KSB Auditorium, KNUST",
+    "isOnline": false,
+    "category": "TALK",
+    "tags": [
+      "fintech",
+      "MoMo",
+      "Hubtel",
+      "payments",
+      "Zeepay",
+      "MTN"
+    ],
+    "targetColleges": [
+      "KSB",
+      "COE",
+      "COS"
+    ],
+    "organizer": "KNUST Finance and Tech Society",
+    "requiresApplication": false,
+    "source": "curated"
+  },
+  {
+    "title": "ALX Africa — Tech Programme Info Session",
+    "description": "ALX runs intensive 12-month software engineering and data science programmes for African students. This session covers: what the programme looks like, how the job placement works (70%+ of graduates land tech roles), the commitment required, and how KNUST students have done. If you're considering ALX, come with questions — past KNUST graduates will be there.",
+    "startsAt": "2026-06-06T13:02:53.431Z",
+    "location": "Online (Zoom) + KNUST Engineering Hub, Room 12",
+    "isOnline": true,
+    "category": "TALK",
+    "tags": [
+      "ALX",
+      "software engineering",
+      "data science",
+      "career",
+      "programme"
+    ],
+    "targetColleges": [
+      "COE",
+      "COS",
+      "KSB"
+    ],
+    "organizer": "ALX Africa",
+    "requiresApplication": false,
+    "applicationUrl": "https://www.alxafrica.com",
+    "source": "curated",
+    "sourceUrl": "https://www.alxafrica.com"
+  },
+  {
+    "title": "Startup Weekend Kumasi 2025",
+    "description": "54 hours. An idea. A team you meet on Friday night. A product you demo on Sunday. Startup Weekend is the world's largest startup event series — this is the Kumasi edition. No business plan needed. Just show up with a problem you care about. Facilitators from Nest at Accra and local Kumasi entrepreneurs will mentor your team through the weekend.",
+    "startsAt": "2026-07-18T13:02:53.431Z",
+    "endsAt": "2026-07-18T13:02:53.431Z",
+    "location": "Nest at Kumasi, Adum, Kumasi",
+    "isOnline": false,
+    "category": "HACKATHON",
+    "tags": [
+      "startup",
+      "weekend",
+      "entrepreneurship",
+      "team",
+      "pitch",
+      "54hrs"
+    ],
+    "targetColleges": [
+      "KSB",
+      "COE",
+      "COS",
+      "COA"
+    ],
+    "organizer": "Techstars / Startup Weekend Kumasi",
+    "requiresApplication": true,
+    "applicationUrl": "https://startupweekend.org",
+    "applicationDeadline": "2026-07-04T13:02:53.431Z",
+    "source": "curated",
+    "sourceUrl": "https://startupweekend.org"
+  }
+]
