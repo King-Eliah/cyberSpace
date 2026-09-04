@@ -3,8 +3,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { generateLinkedInPost } from "@/lib/ai-features";
+import { AiFormatError, AiUnavailableError } from "@/lib/gemini";
 import { linkedinRateLimiter, checkRateLimit } from "@/lib/rate-limit";
 import { linkedinPostSchema } from "@/lib/validators";
+
+// Gemini calls run 5-35s; the platform default cuts them off well before that.
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
@@ -46,22 +50,49 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Event not found" }, { status: 404 });
   }
 
-  const { variants, tokensUsed } = await generateLinkedInPost(
-    event,
-    user ?? {},
-    takeaways
-  );
+  let variants, tokensUsed;
+  try {
+    ({ variants, tokensUsed } = await generateLinkedInPost(
+      event,
+      user ?? {},
+      takeaways
+    ));
+  } catch (error) {
+    console.error("[ai/linkedin-post] generation failed", error);
 
-  await prisma.aiGeneration.create({
-    data: {
-      userId: session.user.id,
-      type: "linkedin_post",
-      eventId,
-      input: { takeaways } as never,
-      output: { variants } as never,
-      tokensUsed,
-    },
-  });
+    if (error instanceof AiUnavailableError) {
+      return NextResponse.json(
+        { error: "The writing assistant is unreachable right now. Try again in a moment." },
+        { status: 503 }
+      );
+    }
+    if (error instanceof AiFormatError) {
+      return NextResponse.json(
+        { error: "We couldn't shape that into a post. Try rewording your takeaways." },
+        { status: 502 }
+      );
+    }
+    return NextResponse.json(
+      { error: "Something went wrong generating your post." },
+      { status: 500 }
+    );
+  }
+
+  // Logging the generation must never fail the request the user actually made.
+  try {
+    await prisma.aiGeneration.create({
+      data: {
+        userId: session.user.id,
+        type: "linkedin_post",
+        eventId,
+        input: { takeaways },
+        output: { variants: variants as object[] },
+        tokensUsed,
+      },
+    });
+  } catch (error) {
+    console.error("[ai/linkedin-post] failed to record generation", error);
+  }
 
   return NextResponse.json({ variants, remaining });
 }
