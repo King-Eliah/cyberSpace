@@ -57,8 +57,24 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+function getPrisma(): PrismaClient {
+  if (!globalForPrisma.prisma) {
+    const client = createPrismaClient();
+    // Reuse one client across hot reloads in dev. Guarded on VERCEL rather than
+    // NODE_ENV so a machine with NODE_ENV=production exported still caches.
+    if (!process.env.VERCEL) globalForPrisma.prisma = client;
+    return client;
+  }
+  return globalForPrisma.prisma;
+}
 
-// Reuse one client across hot reloads in dev. Guarded on VERCEL rather than
-// NODE_ENV so a machine with NODE_ENV=production exported still gets the cache.
-if (!process.env.VERCEL) globalForPrisma.prisma = prisma;
+// Construct lazily. `next build` imports every route module to collect page
+// data, so building the client at import time would make a missing
+// DATABASE_URL a build failure instead of a runtime error.
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, prop) {
+    const client = getPrisma();
+    const value = Reflect.get(client, prop);
+    return typeof value === "function" ? value.bind(client) : value;
+  },
+});
