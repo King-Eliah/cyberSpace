@@ -37,7 +37,12 @@ try {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const db = new PrismaClient({ adapter: new PrismaPg(pool as any) } as any);
+const db = new PrismaClient({
+  adapter: new PrismaPg(pool as any),
+  // Seeding runs many round trips against a remote database; the 5s default
+  // transaction timeout is not enough over a high-latency link.
+  transactionOptions: { timeout: 30_000, maxWait: 15_000 },
+} as any);
 
 async function main() {
   console.log("🌱 Seeding database...\n");
@@ -59,11 +64,21 @@ async function main() {
   console.log(`Seeding ${events.length} events...`);
 
   for (const event of events) {
-    const id = generateDeterministicId(String(event.title) + String(event.startsAt));
+    // Key on the title alone. seed-data.ts regenerates startsAt relative to the
+    // current date, so including it here minted a new id on every regeneration
+    // and accumulated duplicates instead of updating in place.
+    const id = generateDeterministicId(String(event.title));
 
     await db.event.upsert({
       where: { id },
-      update: {},
+      update: {
+        startsAt: new Date(String(event.startsAt)),
+        endsAt: event.endsAt ? new Date(String(event.endsAt)) : null,
+        applicationDeadline: event.applicationDeadline
+          ? new Date(String(event.applicationDeadline))
+          : null,
+        status: "APPROVED",
+      },
       create: {
         id,
         title: String(event.title),
