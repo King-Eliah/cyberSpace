@@ -70,7 +70,7 @@ export function LinkedInGenerator({ eventId, attended }: LinkedInGeneratorProps)
             AI writing studio
           </span>
           <span className="rounded-full border border-[#E8E8E3] bg-[#FAFAF7] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-[#6B6B63]">
-            Groq powered
+            Gemini powered
           </span>
         </div>
         <h3 className="text-lg font-semibold tracking-tight text-[#0F0F0E]">

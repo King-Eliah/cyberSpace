@@ -1,5 +1,60 @@
-import { generateWithClaude } from "./claude";
+import { Type, type Schema } from "@google/genai";
+import { generateJson, AiFormatError } from "./gemini";
 import type { Event, User, LinkedInVariant, PreEventBrief } from "@/types";
+
+const linkedInSchema: Schema = {
+  type: Type.OBJECT,
+  properties: {
+    variants: {
+      type: Type.ARRAY,
+      items: {
+        type: Type.OBJECT,
+        properties: {
+          label: { type: Type.STRING },
+          hook: { type: Type.STRING, description: "The first line only" },
+          content: { type: Type.STRING, description: "The full post text" },
+        },
+        required: ["label", "hook", "content"],
+        propertyOrdering: ["label", "hook", "content"],
+      },
+    },
+  },
+  required: ["variants"],
+};
+
+const briefSchema: Schema = {
+  type: Type.OBJECT,
+  properties: {
+    whatToExpect: {
+      type: Type.STRING,
+      description: "2-3 sentences on the realistic vibe, format, and crowd",
+    },
+    conversationStarters: { type: Type.ARRAY, items: { type: Type.STRING } },
+    whatToBring: { type: Type.ARRAY, items: { type: Type.STRING } },
+    networkingTip: {
+      type: Type.STRING,
+      description: "One specific, actionable tip for this exact type of event",
+    },
+    mindsetPrimer: {
+      type: Type.STRING,
+      description: "One sentence to set the right frame of mind going in",
+    },
+  },
+  required: [
+    "whatToExpect",
+    "conversationStarters",
+    "whatToBring",
+    "networkingTip",
+    "mindsetPrimer",
+  ],
+  propertyOrdering: [
+    "whatToExpect",
+    "conversationStarters",
+    "whatToBring",
+    "networkingTip",
+    "mindsetPrimer",
+  ],
+};
 
 export async function generateLinkedInPost(
   event: Event,
@@ -18,26 +73,7 @@ STRICT RULES:
 - Reference the KNUST/Ghana context when relevant
 - Focus on what was learned, who was met, or what problem was clarified
 
-Return ONLY valid JSON with this structure:
-{
-  "variants": [
-    {
-      "label": "Reflective",
-      "hook": "The first line only",
-      "content": "The full post text"
-    },
-    {
-      "label": "Technical",
-      "hook": "The first line only",
-      "content": "The full post text"
-    },
-    {
-      "label": "Network-focused",
-      "hook": "The first line only",
-      "content": "The full post text"
-    }
-  ]
-}`;
+Return exactly 3 variants, labelled "Reflective", "Technical", and "Network-focused".`;
 
   const userPrompt = `Event: ${event.title}
 Organizer: ${event.organizer}
@@ -54,14 +90,18 @@ ${takeaways}
 
 Generate 3 LinkedIn post variants based on my takeaways. Make each one feel like I wrote it myself.`;
 
-  const { content, tokensUsed } = await generateWithClaude(
+  const { data, tokensUsed } = await generateJson<{ variants: LinkedInVariant[] }>({
     systemPrompt,
     userPrompt,
-    2000
-  );
+    schema: linkedInSchema,
+    maxOutputTokens: 2000,
+  });
 
-  const parsed = JSON.parse(content);
-  return { variants: parsed.variants, tokensUsed };
+  if (!Array.isArray(data.variants) || data.variants.length === 0) {
+    throw new AiFormatError("Model returned no post variants", JSON.stringify(data).slice(0, 500));
+  }
+
+  return { variants: data.variants, tokensUsed };
 }
 
 export async function generatePreEventBrief(
@@ -75,14 +115,7 @@ Your briefs are culturally grounded for KNUST/Ghana:
 - Know that Ghanaian networking culture is warm but hierarchical
 - Understand the KNUST student hustle — time is tight, resources are limited, every event is an investment
 
-Return ONLY valid JSON with this structure:
-{
-  "whatToExpect": "2-3 sentences on the realistic vibe, format, and crowd",
-  "conversationStarters": ["starter 1", "starter 2", "starter 3"],
-  "whatToBring": ["item 1", "item 2", "item 3"],
-  "networkingTip": "One specific, actionable networking tip for this exact type of event",
-  "mindsetPrimer": "One sentence to set the right frame of mind going in"
-}`;
+Give exactly 3 conversation starters and 3 things to bring.`;
 
   const userPrompt = `Event: ${event.title}
 Organizer: ${event.organizer}
@@ -101,12 +134,16 @@ ${user.interests?.length ? `Interests: ${user.interests.join(", ")}` : ""}
 
 Give me a sharp pre-event brief.`;
 
-  const { content, tokensUsed } = await generateWithClaude(
+  const { data, tokensUsed } = await generateJson<PreEventBrief>({
     systemPrompt,
     userPrompt,
-    1000
-  );
+    schema: briefSchema,
+    maxOutputTokens: 1200,
+  });
 
-  const parsed = JSON.parse(content);
-  return { brief: parsed, tokensUsed };
+  if (!data.whatToExpect) {
+    throw new AiFormatError("Model returned an incomplete brief", JSON.stringify(data).slice(0, 500));
+  }
+
+  return { brief: data, tokensUsed };
 }
